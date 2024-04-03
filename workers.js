@@ -65,19 +65,19 @@ const html = `
             background-color: #555;
         }
        .primary-button {
-        background-color: #007bff; /* Blue */
+        background-color: #007bff;
     }
 
     .primary-button:hover {
-        background-color: #0056b3; /* Darker blue on hover */
+        background-color: #0056b3;
     }
 
     .secondary-button {
-        background-color: #28a745; /* Green */
+        background-color: #28a745;
     }
 
     .secondary-button:hover {
-        background-color: #218838; /* Darker green on hover */
+        background-color: #218838;
     }
 
         table {
@@ -136,19 +136,19 @@ const html = `
       const messageEl = document.getElementById('message');
 
       async function loadRedirects() {
-        table.innerHTML = ''; // Clear table content
+        table.innerHTML = '';
       }
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
         const path = form.elements.path.value;
         const url = form.elements.url.value;
-        const secretCode = form.elements.secretCode.value; // Get the secret code from the input field
+        const secretCode = form.elements.secretCode.value; 
 
         const response = await fetch('/api/redirects', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ path, url, secretCode }), // Include the secret code in the form data
+          body: new URLSearchParams({ path, url, secretCode }), 
         });
         const message = await response.text();
         messageEl.textContent = message;
@@ -161,7 +161,7 @@ const html = `
   </body>
 </html>
 `;
-const SECRET_CODE = 'Replace_With_Your_Own_Secret_Code';
+const SECRET_CODE = 'Buddy_Replace_With_Your_Own_Secret_Code';
 
 const manifest = JSON.stringify({
   name: 'General Link shortener',

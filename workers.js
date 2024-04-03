@@ -71,14 +71,22 @@ const html = `
     .primary-button:hover {
         background-color: #0056b3; 
     }
-
+ 
     .secondary-button {
         background-color: #28a745;
     }
 
-    .secondary-button:hover {
-        background-color: #218838; 
+    .third-button:hover {
+        background-color: #494949; 
     }
+
+    .third-button {
+      background-color: #393939;
+  }
+
+  .secondary-button:hover {
+      background-color: #218838; 
+  }
 
         table {
             width: 100%;
@@ -107,16 +115,19 @@ const html = `
     </header>
     <div class="container">
       <form id="add-redirect-form">
-        <label for="path">Path: (If no path is specified, a random path will be generated</label>
+        <label for="path" style="font-weight: bold;">Path: (If no path is specified, a random path will be generated</label>
         <input type="text" id="path" name="path" >
-        <label for="url">URL:</label>
+        <label for="url" style="font-weight: bold;">URL:</label>
         <input type="url" id="url" name="url" required>
-        <label for="secretCode">Secret Code:</label>
+        <label for="secretCode" style="font-weight: bold;">Secret Code:</label>
         <input type="text" id="secretCode" name="secretCode" required>
-        <button type="submit" class="primary-button">Add Redirect</button>
+        <button type="submit" class="primary-button" style="font-weight: bold;">Create Short Url</button>
       </form>
       <form action="/list" method="get">
-       <button type="submit" class="secondary-button">List All Links</button>
+       <button type="submit" class="secondary-button" style="font-weight: bold;">List Short Urls</button>
+      </form>
+      <form action="/delete" method="get">
+       <button type="submit" class="third-button" style="font-weight: bold;">Delete Short Urls</button>
       </form>
       <p id="message"></p>
       <h2>Redirects</h2>
@@ -161,7 +172,7 @@ const html = `
   </body>
 </html>
 `;
-const SECRET_CODE = 'Buddy_Add_Your_Supper_Secret_code_Here';
+const SECRET_CODE = 'Buddy Replace It With Your own Secret Code';
 
 const manifest = JSON.stringify({
   name: 'Serverless Link shortener',
@@ -169,7 +180,7 @@ const manifest = JSON.stringify({
   start_url: '/',
   display: 'standalone',
   background_color: '#f9f9f9',
-  theme_color: '#3d1887',
+  theme_color: '#850538',
   icons: [
     {
       src: 'https://cdn-cloudflare.smartgoat.me/link-shortener.png',
@@ -206,6 +217,14 @@ export default {
 
     if (request.method === 'GET' && pathname === '/manifest.json') {
       return new Response(manifest, { headers: { 'Content-Type': 'application/manifest+json' } });
+    }
+
+    if (request.method === 'GET' && pathname === '/delete') {
+      return serveDeletePage(env);
+    }
+
+    if (request.method === 'DELETE' && pathname === '/api/redirects') {
+      return handleDeleteRedirect(request, env);
     }
 
     const key = pathname.split('/')[1];
@@ -270,6 +289,139 @@ function generateRandomString(length) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;
+}
+
+async function serveDeletePage(env) {
+  return new Response(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <title>Delete Redirect</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+
+          .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+          }
+
+          h1 {
+            text-align: center;
+            color: #333;
+          }
+
+          form {
+            display: flex;
+            flex-direction: column;
+          }
+
+          label {
+            font-weight: bold;
+            margin-top: 10px;
+          }
+
+          input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+          }
+
+          button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+
+          button:hover {
+            background-color: #0056b3;
+          }
+
+          #message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1>Delete Redirect</h1>
+          <form id="delete-redirect-form">
+            <label for="path">Path:</label>
+            <input type="text" id="path" name="path" required>
+            <label for="secretCode">Secret Code:</label>
+            <input type="text" id="secretCode" name="secretCode" required>
+            <button type="submit">Delete Redirect</button>
+          </form>     
+          <p id="message"></p>
+
+          <div class="button">
+           <a id="back-button" style="color: #b36007; font-weight: bold; margin-right: 5px;" href="/">Back</a>
+           <a id="back-button" style="color: #057a28; font-weight: bold;" href="/list">List Page</a>
+        </div>
+        </div>
+        <script>
+          const form = document.getElementById('delete-redirect-form');
+          const messageEl = document.getElementById('message');
+
+          form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const path = form.elements.path.value;
+            const secretCode = form.elements.secretCode.value;
+
+            const response = await fetch('/api/redirects', {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+              body: new URLSearchParams({ path, secretCode }),
+            });
+            const message = await response.text();
+            messageEl.textContent = message;
+            form.reset();
+          });
+        </script>
+      </body>
+    </html>
+  `, { headers: { 'Content-Type': 'text/html' } });
+}
+
+async function handleDeleteRedirect(request, env) {
+  const formData = await request.formData();
+  const path = formData.get('path');
+  const secretCode = formData.get('secretCode');
+
+  if (secretCode !== SECRET_CODE) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  if (!path) {
+    return new Response('Invalid request', { status: 400 });
+  }
+
+  const existingUrl = await env.kv.get(path);
+
+  if (!existingUrl) {
+    return new Response('Redirect not found', { status: 404 });
+  }
+
+  await env.kv.delete(path);
+  return new Response('Redirect deleted successfully', { status: 200 });
 }
 
 async function serveListPage(env) {

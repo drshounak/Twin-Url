@@ -1,5 +1,10 @@
 # Really-Simple-Url-Shortner
 A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV database. A 302 redirector for shortening your url at edge.
+## How to use
+* Go to your Cloudflare Workers Dashboard and deploy a worker. Then go to Edit code.
+* Copy the workers.js and change your secret code in line 164 and deploy.
+* Now add a domain or subdomain of you own in settings > triggers > custom domain.
+
 ## Reason behind choosing Cloudflare Workers
 * 100,000 free requests daily
 * 1000 free addition, modification or deletions daily.

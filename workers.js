@@ -298,7 +298,7 @@ font-size: 1.1rem;
 <div class="container">
 <h2>Oh Noooo. 404 Not Found!</h2>
    <figure>
-      <img src="https://render.fineartamerica.com/images/rendered/medium/print/8/7.5/break/images-medium-5/grumpy-cat-olga-shvartsur.jpg" alt="Grumpy Cat" title="This is Mr. Grumpy">
+      <img src="https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/grumpy-cat-olga-shvartsur.jpg" alt="Grumpy Cat" title="This is Mr. Grumpy">
      <figcaption><b>👆 This is Mr. Grumpy</b></figcaption>
 
   <p>Uh-oh, it seems like the page you're trying to reach has gone on a little adventure of its own! <b>It usually happens when the short URL is wrong or not live yet.</b></p>

@@ -263,7 +263,7 @@ function generateRandomString(length) {
 
 async function serveDeletePage(env) {
   return new Response(`
-    <!DOCTYPE html>
+     <!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8">
@@ -272,25 +272,37 @@ async function serveDeletePage(env) {
         <style>
           body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 7px;
-          }
-
-          .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-            width: 100%;
-          }
-
-          h1 {
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+          
+          header {
+            background-color: #045dd1;
+            color: #fff;
+            padding: 10px 0;
+            margin: 10px auto;
+            margin-bottom: 20px;
+            max-width: 450px;
+            border-radius: 7px;
             text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            color: #fff;
+        }
+
+         .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+          h2 {
             color: #333;
           }
 
@@ -332,8 +344,11 @@ async function serveDeletePage(env) {
         </style>
       </head>
       <body>
+        <header>
+        <h1>URL Shortener</h1>
+        </header>
         <div class="container">
-          <h1>Delete Redirect</h1>
+          <h2>Delete Redirect</h2>
           <form id="delete-redirect-form">
             <label for="path">Path:</label>
             <input type="text" id="path" name="path" required>
@@ -348,6 +363,8 @@ async function serveDeletePage(env) {
            <a id="back-button" style="color: #057a28; font-weight: bold;" href="/list">List Page</a>
         </div>
         </div>
+        <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
+    </div>
         <script>
           const form = document.getElementById('delete-redirect-form');
           const messageEl = document.getElementById('message');

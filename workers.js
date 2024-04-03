@@ -65,11 +65,11 @@ const html = `
             background-color: #555;
         }
        .primary-button {
-        background-color: #007bff;
+        background-color: #007bff; 
     }
 
     .primary-button:hover {
-        background-color: #0056b3;
+        background-color: #0056b3; 
     }
 
     .secondary-button {
@@ -77,7 +77,7 @@ const html = `
     }
 
     .secondary-button:hover {
-        background-color: #218838;
+        background-color: #218838; 
     }
 
         table {
@@ -136,7 +136,7 @@ const html = `
       const messageEl = document.getElementById('message');
 
       async function loadRedirects() {
-        table.innerHTML = '';
+        table.innerHTML = ''; 
       }
 
       form.addEventListener('submit', async (event) => {
@@ -161,15 +161,15 @@ const html = `
   </body>
 </html>
 `;
-const SECRET_CODE = 'Buddy_Replace_With_Your_Own_Secret_Code';
+const SECRET_CODE = 'Buddy_Add_Your_Supper_Secret_code_Here';
 
 const manifest = JSON.stringify({
-  name: 'General Link shortener',
-  short_name: 'General Link shortener',
+  name: 'Serverless Link shortener',
+  short_name: 'Link shortener',
   start_url: '/',
   display: 'standalone',
   background_color: '#f9f9f9',
-  theme_color: '#850538',
+  theme_color: '#3d1887',
   icons: [
     {
       src: 'https://cdn-cloudflare.smartgoat.me/link-shortener.png',
@@ -256,11 +256,11 @@ async function handleCreateRedirect(request, env) {
   const existingUrl = await env.kv.get(path);
 
   if (existingUrl) {
-    return new Response('Ooh, already exists', { status: 200 });
+    return new Response('Ooh, already exists buddy', { status: 200 });
   }
 
   await env.kv.put(path, url);
-  return new Response(`Yaah, it is a success. Your short URL is: ${new URL(request.url).origin}/${path}`, { status: 200 });
+  return new Response(`Yaay, it is a success. Your short URL is: ${new URL(request.url).origin}/${path}`, { status: 200 });
 }
 
 function generateRandomString(length) {
@@ -294,7 +294,7 @@ async function serveListPage(env) {
             padding: 0;
             font-family: 'Roboto', Arial, Helvetica, sans-serif;
             color: #525000;
-            background-color: #f5f5f5; /* Changed background color */
+            background-color: #f5f5f5; 
         }
 
         #container {
@@ -309,35 +309,35 @@ async function serveListPage(env) {
             font-size: 1.5rem;
             line-height: 1.5rem;
             text-align: center;
-            color: #333; /* Changed text color */
-            padding-bottom: 1rem; /* Added padding */
+            color: #333;
+            padding-bottom: 1rem; 
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem; /* Added margin */
+            margin-top: 1rem;
         }
 
         th,
         td {
-            padding: 12px; /* Increased padding */
+            padding: 12px;
             text-align: left;
             word-break: break-word;
         }
 
         th {
-            background-color: #ffca28; /* Changed background color */
-            color: #333; /* Changed text color */
+            background-color: #ffca28;
+            color: #333; 
             min-width: 130px;
         }
 
         tbody tr:nth-child(even) {
-            background-color: #fff; /* Changed background color */
+            background-color: #fff;
         }
 
         tbody tr:nth-child(odd) {
-            background-color: #f9f9f9; /* Changed background color */
+            background-color: #f9f9f9;
         }
 
         @media (min-width: 600px) {
@@ -368,7 +368,6 @@ async function serveListPage(env) {
         .back-button a:hover {
             background-color: #0056b3;
         }
-        /* ... (CSS styles for the list page remain the same) */
     </style>
     </head>
     <body>
@@ -398,7 +397,7 @@ async function serveListPage(env) {
   keyCells.forEach(cell => {
     cell.addEventListener("click", () => {
       const key = cell.getAttribute("data-key");
-      const url = location.origin + "/" + key; // Using location.origin to get the current domain
+      const url = location.origin + "/" + key; 
       navigator.clipboard.writeText(url)
         .then(() => {
           alert(\`Copied: \${url}\`);

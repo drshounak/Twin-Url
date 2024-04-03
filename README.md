@@ -8,7 +8,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * Go to settings > variables > kv name space binding > add binding
 * Variable Name = "kv" and select the namespace you just created.
 * Then go to Edit code.
-* Copy the workers.js and change your secret code in line 164 and deploy.
+* Copy the workers.js and change your secret code in line 175 and deploy.
 * Now add a domain or subdomain of you own in settings > triggers > custom domain.
 
 ## Reason behind choosing Cloudflare Workers
@@ -19,8 +19,9 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 
 ## Features Present
 * A nice UI to add URL.
-* Secret code to prevent unauthorised use (Change it in line 164).
+* Secret code to prevent unauthorised use (Change it in line 175).
 * Go to /list to list all your redirects.
+* Go to /delete and enter the path like 'VDYWckqz' and secret code to delete a redirect
 * You can provide custom path like https://2tw.in/techblog.
 * If you don't specify a path a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
 * After short url is generated it will display that.
@@ -29,7 +30,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * To add password to your main page and list page use octauthent.
 
 ## Feature Not Present
-* As deletion or modification of redirects is rare I didn't add UI for that, you can easily change and delete those in Cloudflare KV dashboard.
+* As modification of redirects is rare I didn't add UI for that, you can easily change those in Cloudflare KV dashboard.
 * No analytics. (I don't know how to add one)
 
 ![](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_090347_Chrome.png)

@@ -1,4 +1,4 @@
-# Really-Simple-Url-Shortner
+# Simple Url Shortner and redirect witn branded url
 A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV database. A 302 redirector for shortening your url at edge.
 ## How to use
 ### Deploy a KV database

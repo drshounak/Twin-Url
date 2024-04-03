@@ -22,6 +22,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * Secret code to prevent unauthorised use **(Change it in line 156).**
 * Go to /list to list all your redirects.
 * Go to /delete and enter the path like 'VDYWckqz' and secret code to delete a redirect
+* Custom 404 page. The default one is funny https://2tw.in/404. 
 * You can provide custom path like https://2tw.in/techblog.
 * If you don't specify a path, a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
 * After short url is generated it will display that.
@@ -38,5 +39,6 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145522.png)
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145613.png)
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145644.png)
+![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot_20240403_195427_Chrome.png)
 
 

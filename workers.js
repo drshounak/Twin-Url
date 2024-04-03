@@ -57,24 +57,34 @@ const html = `
             box-sizing: border-box;
         }
 
-        button {
-            padding: 10px 20px;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+       button {
+          margin-top: 20px;
+          padding: 10px;
+          background-color: #393939;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
         }
 
         button:hover {
             background-color: #555;
         }
        .primary-button {
-        background-color: #045dd1; 
+        background-color: #393939; 
     }
 
     .primary-button:hover {
         background-color: #03469e; 
     }
+    
+    h2 {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      color: #333;
+      padding-top: 1rem;
+      text-decoration: underline;
+  }
       
     </style>
   </head>
@@ -83,8 +93,9 @@ const html = `
       <h1>URL Shortener</h1>
     </header>
     <div class="container">
+    <h2>Create Short URLs:</h2>
       <form id="add-redirect-form">
-        <label for="path" style="font-weight: bold;">Path: (If no path is specified, a random path will be generated</label>
+        <label for="path";"><strong>Path:</strong> (If no path is specified, a random path will be generated</label>
         <input type="text" id="path" name="path" >
         <label for="url" style="font-weight: bold;">URL:</label>
         <input type="url" id="url" name="url" required>

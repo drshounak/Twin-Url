@@ -23,6 +23,8 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * Go to /list to list all your redirects.
 * You can provide custom path like https://2tw.in/techblog.
 * If you don't specify a path a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
+* After short url is generated it will display that.
+* Click on the short url path to copy the short url in list page
 * /robots.txt gives you no index, and /manifest.json gives you Manifest.
 * To add password to your main page and list page use octauthent.
 
@@ -32,4 +34,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 
 ![](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_090347_Chrome.png)
 ![](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_090313_Chrome.png)
+![](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_100404_Chrome.png)
+![](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_100428_Chrome.png)
+
 

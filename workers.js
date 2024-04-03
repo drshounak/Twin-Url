@@ -4,20 +4,24 @@ const html = `
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serverless Link Shortener and Organizer</title>
+    <title>Serverless URL Shortener and Organizer</title>
     <link rel="manifest" href="manifest.json"/>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
+            margin: 7px;
             padding: 0;
             background-color: #f9f9f9;
         }
 
         header {
-            background-color: #3d1887;
+            background-color: #045dd1;
             color: #fff;
-            padding: 20px 0;
+            padding: 10px 0;
+            margin: 10px auto;
+            margin-bottom: 20px;
+            max-width: 450px;
+            border-radius: 7px;
             text-align: center;
         }
 
@@ -26,7 +30,7 @@ const html = `
         }
 
         .container {
-            max-width: 800px;
+            max-width: 400px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -65,53 +69,18 @@ const html = `
             background-color: #555;
         }
        .primary-button {
-        background-color: #007bff; 
+        background-color: #045dd1; 
     }
 
     .primary-button:hover {
-        background-color: #0056b3; 
+        background-color: #03469e; 
     }
- 
-    .secondary-button {
-        background-color: #28a745;
-    }
-
-    .third-button:hover {
-        background-color: #494949; 
-    }
-
-    .third-button {
-      background-color: #393939;
-  }
-
-  .secondary-button:hover {
-      background-color: #218838; 
-  }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+      
     </style>
   </head>
   <body>
     <header>
-      <h1>Link Shortener</h1>
-      <p>Ofcource it is serverless, Trespassers will be prosecuted</p>
+      <h1>URL Shortener</h1>
     </header>
     <div class="container">
       <form id="add-redirect-form">
@@ -123,15 +92,13 @@ const html = `
         <input type="text" id="secretCode" name="secretCode" required>
         <button type="submit" class="primary-button" style="font-weight: bold;">Create Short Url</button>
       </form>
-      <form action="/list" method="get">
-       <button type="submit" class="secondary-button" style="font-weight: bold;">List Short Urls</button>
-      </form>
-      <form action="/delete" method="get">
-       <button type="submit" class="third-button" style="font-weight: bold;">Delete Short Urls</button>
-      </form>
       <p id="message"></p>
-      <h2>Redirects</h2>
-      <table id="redirects-table">
+      <div>
+        <a style="color: #b36007; font-weight: bold; margin-right: 5px;" href="/list">List All Short Urls</a>
+        <a style="color: #057a28; font-weight: bold;" href="/delete">Delete Short Urls</a>
+      </div>
+      <h2 style="visibility:hidden">Redirects</h2>
+      <table id="redirects-table" style="visibility:hidden">
         <thead>
           <tr>
             <th>Path</th>
@@ -140,6 +107,9 @@ const html = `
         </thead>
         <tbody></tbody>
       </table>
+    </div>
+    <div>
+      <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
     </div>
     <script>
       const form = document.getElementById('add-redirect-form');

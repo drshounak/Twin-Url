@@ -8,7 +8,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * Go to settings > variables > kv name space binding > add binding
 * Variable Name = "kv" and select the namespace you just created.
 * Then go to Edit code.
-* Copy the workers.js and change your secret code in **line 175 and** deploy.
+* Copy the workers.js and change your secret code in **line 145 and** deploy.
 * Now add a domain or subdomain of you own in settings > triggers > custom domain.
 
 ## Reason behind choosing Cloudflare Workers
@@ -19,7 +19,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 
 ## Features Present
 * A nice UI to add URL.
-* Secret code to prevent unauthorised use **(Change it in line 175).**
+* Secret code to prevent unauthorised use **(Change it in line 145).**
 * Go to /list to list all your redirects.
 * Go to /delete and enter the path like 'VDYWckqz' and secret code to delete a redirect
 * You can provide custom path like https://2tw.in/techblog.

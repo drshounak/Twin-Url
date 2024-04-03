@@ -5,7 +5,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * Go to Cloudflare workers dashboard and KV, deploy a kv namespace with a fancy name.
 ### Deploy Workers script
 * Go to your Cloudflare Workers Dashboard and deploy a worker.
-* Go to settings > variables > kv name space binding > ad binding
+* Go to settings > variables > kv name space binding > add binding
 * Variable Name = "kv" and select the namespace you just created.
 * Then go to Edit code.
 * Copy the workers.js and change your secret code in line 164 and deploy.

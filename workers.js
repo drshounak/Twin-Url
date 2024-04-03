@@ -20,7 +20,7 @@ const html = `
             padding: 10px 0;
             margin: 10px auto;
             margin-bottom: 20px;
-            max-width: 450px;
+            max-width: 650px;
             border-radius: 7px;
             text-align: center;
         }
@@ -30,7 +30,7 @@ const html = `
         }
 
         .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -294,7 +294,7 @@ async function serveDeletePage(env) {
             padding: 10px 0;
             margin: 10px auto;
             margin-bottom: 20px;
-            max-width: 450px;
+            max-width: 650px;
             border-radius: 7px;
             text-align: center;
         }
@@ -305,7 +305,7 @@ async function serveDeletePage(env) {
         }
 
          .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -453,7 +453,7 @@ async function serveListPage(env) {
             padding: 10px 0;
             margin: 10px auto;
             margin-bottom: 20px;
-            max-width: 450px;
+            max-width: 650px;
             border-radius: 7px;
             text-align: center;
         }
@@ -463,7 +463,7 @@ async function serveListPage(env) {
         }
 
         .container {
-            max-width: 400px;
+            max-width: 600px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;

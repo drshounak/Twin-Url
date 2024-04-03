@@ -33,10 +33,10 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * As modification of redirects is rare I didn't add UI for that, you can easily change those in Cloudflare KV dashboard.
 * No analytics. (I don't know how to add one)
 
-![](https://github.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/blob/main/images/Screenshot%202024-04-03%20156409.png)
-![](https://github.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/blob/main/images/Screenshot%202024-04-03%20156449.png)
-![](https://github.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/blob/main/images/Screenshot%202024-04-03%20156522.png)
-![](https://github.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/blob/main/images/Screenshot%202024-04-03%20156613.png)
-![](https://github.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/blob/main/images/Screenshot%202024-04-03%20156644.png)
+![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145409.png)
+![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145449.png)
+![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145522.png)
+![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145613.png)
+![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145644.png)
 
 

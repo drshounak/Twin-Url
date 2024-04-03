@@ -430,27 +430,42 @@ async function serveListPage(env) {
     <title>Serverless Link Redirector</title>
     <style>
     body {
-            margin: 5;
+            font-family: Arial, sans-serif;
+            margin: 7px;
             padding: 0;
-            font-family: 'Roboto', Arial, Helvetica, sans-serif;
-            color: #525000;
-            background-color: #f5f5f5; 
+            background-color: #f9f9f9;
         }
 
-        #container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+        header {
+            background-color: #045dd1;
+            color: #fff;
+            padding: 10px 0;
+            margin: 10px auto;
+            margin-bottom: 20px;
+            max-width: 450px;
+            border-radius: 7px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             margin: 0;
             font-size: 1.5rem;
             line-height: 1.5rem;
-            text-align: center;
             color: #333;
-            padding-bottom: 1rem; 
+            padding-top: 1rem; 
         }
 
         table {
@@ -469,7 +484,7 @@ async function serveListPage(env) {
         th {
             background-color: #ffca28;
             color: #333; 
-            min-width: 130px;
+            min-width: 100px;
         }
 
         tbody tr:nth-child(even) {
@@ -498,7 +513,7 @@ async function serveListPage(env) {
         }
 
         .back-button a {
-            background-color: #007bff;
+            background-color: #393939;
             color: #fff;
             padding: 10px 20px;
             text-decoration: none;
@@ -511,10 +526,15 @@ async function serveListPage(env) {
     </style>
     </head>
     <body>
-    <h2>List of Keys and Values</h2>
-    <div class="back-button">
+    <header>
+      <h1>URL Shortener</h1>
+      </header>
+      <div class="container">
+      <div class="back-button">
         <a id="back-button" href="/">Back</a>
-    </div>
+        <a id="back-button" href="/delete">Delete</a>
+      </div>
+    <h2>Shortened URLs</h2>
     <table>
       <thead>
         <tr>
@@ -531,6 +551,10 @@ async function serveListPage(env) {
         `).join('')}
       </tbody>
     </table>
+    </div>
+    <div>
+      <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
+    </div>
     <script>
   const keyCells = document.querySelectorAll(".copy-key");
 
@@ -548,7 +572,6 @@ async function serveListPage(env) {
     });
   });
 </script>
-
     </body>
     </html>
   `;

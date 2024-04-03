@@ -19,3 +19,6 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * As deletion or modification of redirects is rare I didn't add UI for that, you can easily change and delete those in Cloudflare KV dashboard.
 * No analytics.
 
+[](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_090347_Chrome.png)
+[](https://github.com/drshounak/Really-Simple-Url-Shortner/blob/main/Screenshots/Screenshot_20240403_090313_Chrome.png)
+

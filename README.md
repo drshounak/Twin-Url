@@ -11,7 +11,7 @@ A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV 
 * Secret code to prevent unauthorised use (Change it in line 164).
 * Go to /list to list all your redirects.
 * You can provide custom path like https://2tw.in/techblog.
-* If you don't specify a path a random 8 digit string will be generated. There is a very very negligible chance of genaration of same string in a very very large setup.
+* If you don't specify a path a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
 * /robots.txt gives you no index, and /manifest.json gives you Manifest.
 * To add password to your main page and list page use octauthent.
 

@@ -1,5 +1,5 @@
-# Simple Url Shortner and redirect witn branded url
-A very simple URL shortner built on top of Cloudflare Workers and Cloudflare KV database. A 302 redirector for shortening your url at edge.
+# Simple Url Shortner and redirector witn branded url using Cloudflare Workers (Link analysis with Matomo self-hosted)
+A very simple fast free(within cloudflare free limit) URL shortner built on top of Cloudflare Workers and Cloudflare KV database. A 302 redirector for shortening your url at edge. Or you can use it as a link organisation and management tool. For visitors analytics you can use **Matomo** (both paid and self-hosted works). I could not make it work with Plausible or Umami. 
 ## How to use
 ### Deploy a KV database
 * Go to Cloudflare workers dashboard and KV, deploy a kv namespace with a fancy name.

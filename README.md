@@ -1,8 +1,11 @@
-# Simple Url Shortner and redirector with branded url using Cloudflare Workers (Link analysis with Matomo self-hosted)
-A very simple fast free(within cloudflare free limit) URL shortner built on top of Cloudflare Workers and Cloudflare KV database. A 302 redirector for shortening your url at edge. Or you can use it as a link organisation and management tool. For visitors analytics you can use **Matomo** (both paid and self-hosted works). I could not make it work with Plausible or Umami. 
+# Twin-Url: A simple, fast Url Shortner and redirector with branded domain using Cloudflare Workers (Link analysis with Matomo self-hosted)
+A very simple, fast, free(within cloudflare free limit) URL shortner built on top of Cloudflare Workers and Cloudflare KV database. You can use it as a link organiser and management tool too. For visitors/redirection analytics you can use [**Matomo**](https://matomo.org/) (both paid and self-hosted works). And to password protect you link list page and main ui you can use [Octauthent](https://octauthent.com/)
+
 ## How to use
+
 ### Deploy a KV database
 * Go to Cloudflare workers dashboard and KV, deploy a kv namespace with a fancy name.
+
 ### Deploy Workers script
 * Go to your Cloudflare Workers Dashboard and deploy a worker.
 * Go to settings > variables > kv name space binding > add binding
@@ -23,12 +26,11 @@ A very simple fast free(within cloudflare free limit) URL shortner built on top 
 * Go to /list to list all your redirects.
 * Go to /delete and enter the path like 'VDYWckqz' and secret code to delete a redirect
 * Custom 404 page. The default one is funny https://2tw.in/404. 
-* You can provide custom path like https://2tw.in/techblog.
-* If you don't specify a path, a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
-* After short url is generated it will display that.
-* Click on the short url path to copy the short url in list page
-* /robots.txt gives you no index, and /manifest.json gives you Manifest.
-* To add a password to your main page and list page use octauthent.
+* You can set custom path like https://2tw.in/techblog.
+* Or,if you don't specify a path, a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
+* After a short url is generated it will display the generated url.
+* Click on the short url path to copy the short url on list page
+* /robots.txt: crawling is blocked
 
 ## Adding Analytics
 Modify the workers.js script with this matomo code at line 223.

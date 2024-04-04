@@ -30,9 +30,47 @@ A very simple fast free(within cloudflare free limit) URL shortner built on top 
 * /robots.txt gives you no index, and /manifest.json gives you Manifest.
 * To add a password to your main page and list page use octauthent.
 
+## Adding Analytics
+Modify the workers.js script with with this
+```
+    const dest = await env.kv.get(key);
+    if (dest) {
+      const matomoURL = `https://your.matomo.url/matomo.php`;
+      const clientIP = request.headers.get('cf-connecting-ip');
+      const userAgent = request.headers.get('User-Agent');
+      const userId = clientIP.replace(/\./g, '').slice(0, 16);
+
+      const payload = new URLSearchParams();
+      payload.append('idsite', '1');
+      payload.append('rec', '1');
+      payload.append('action_name', `Redirect/${key}`);
+      payload.append('url', `https://2tw.in/${key}`);
+      payload.append('_id', userId);
+      payload.append('rand', Math.floor(Math.random() * 1000000000));
+      payload.append('apiv', '1');
+      payload.append('token_auth', 'YOUR_MATOMO_TOKEN_AUTH');
+      payload.append('cip', clientIP);
+
+      await fetch(matomoURL, {
+        method: 'POST',
+        body: payload.toString(),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'User-Agent': userAgent,
+        },
+      });
+
+      return new Response('Redirecting...', {
+        status: 302,
+        headers: {
+          'Location': dest,
+        },
+      });
+    }
+```
+
 ## Feature Not Present
 * As modification of redirects is rare I didn't add UI for that, you can easily change those in Cloudflare KV dashboard.
-* No analytics. (I don't know how to add one)
 
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145409.png)
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145449.png)

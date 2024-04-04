@@ -31,7 +31,7 @@ A very simple fast free(within cloudflare free limit) URL shortner built on top 
 * To add a password to your main page and list page use octauthent.
 
 ## Adding Analytics
-Modify the workers.js script with with this at line 223
+Modify the workers.js script with this matomo code at line 223.
 ```
     const dest = await env.kv.get(key);
     if (dest) {

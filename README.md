@@ -33,7 +33,7 @@ A very simple, fast, free(within cloudflare free limit) URL shortner built on to
 * /robots.txt: crawling is blocked
 
 ## Adding Analytics
-Modify the workers.js script with this matomo code at line 223.
+Modify the workers.js script with this matomo code at line 223. The easiest way to self-host matomo is through [CloudPanel](https://www.cloudpanel.io/docs/v2/php/applications/matomo/)
 ```
     const dest = await env.kv.get(key);
     if (dest) {
@@ -72,7 +72,7 @@ Modify the workers.js script with this matomo code at line 223.
 ```
 
 ## Feature Not Present
-* As modification of redirects is rare I didn't add UI for that, you can easily change those in Cloudflare KV dashboard.
+* As modification of redirects is rare, I didn't add UI for that, you can easily change your redirect url by going to you kv dashboard and your kv database.
 
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145409.png)
 ![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145449.png)

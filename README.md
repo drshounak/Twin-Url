@@ -33,7 +33,7 @@ A very simple, fast, free(within cloudflare free limit) URL shortner built on to
 * /robots.txt: crawling is blocked
 
 ## Adding Analytics
-Modify the workers.js script with this matomo code at line 223. The easiest way to self-host matomo is through [CloudPanel](https://www.cloudpanel.io/docs/v2/php/applications/matomo/). This will slow down redirection for locations physically far from your matomo server. If you use analytics try proxying matomo through cdn with good peering (like Cloudflare with Argo or Bunny). Cloudflare free plan is slow and defeats the purpose of it being serverless.
+Modify the workers.js script with this matomo code at line 223. The easiest way to self-host matomo is through [CloudPanel](https://www.cloudpanel.io/docs/v2/php/applications/matomo/). This will slow down redirection for locations physically far from your matomo server. If you use analytics try proxying matomo through cdn with good routing (like Cloudflare with Argo or Bunny). Adding this analytics takes away the speed it achieved by being serverless. 
 ```
     const dest = await env.kv.get(key);
     if (dest) {

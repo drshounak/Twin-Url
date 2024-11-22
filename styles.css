@@ -140,32 +140,32 @@ body {
   color: var(--primary-dark);
 }
 
-/* Previous CSS remains the same, adding these updates */
-.table-container {
-  max-width: 100%;
-  overflow-x: auto;
-}
+table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
 
-.table td {
-  max-width: 300px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            word-break: break-word;
+        }
 
-.table .copy-key {
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
+        th {
+            background-color: #ffca28;
+            color: #333; 
+            min-width: 100px;
+        }
 
-.table .copy-key:hover {
-  background-color: var(--muted);
-}
+        tbody tr:nth-child(even) {
+            background-color: #fff;
+        }
 
-.table .copy-key td:first-child {
-  color: var(--primary);
-  font-weight: 500;
-}
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
 
 .message {
   padding: 1rem;

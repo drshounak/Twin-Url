@@ -1,156 +1,84 @@
 const html = `
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serverless URL Shortener and Organizer</title>
+    <title>Twin-Url - Modern URL Shortener</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="manifest" href="manifest.json"/>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 7px;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        header {
-            background-color: #045dd1;
-            color: #fff;
-            padding: 10px 0;
-            margin: 10px auto;
-            margin-bottom: 20px;
-            max-width: 650px;
-            border-radius: 7px;
-            text-align: center;
-        }
-
-        h1 {
-            margin: 0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        form {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"],
-        input[type="url"] {
-            width: calc(100% - 10px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-       button {
-          margin-top: 20px;
-          padding: 10px;
-          background-color: #393939;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #555;
-        }
-       .primary-button {
-        background-color: #393939; 
-    }
-
-    .primary-button:hover {
-        background-color: #03469e; 
-    }
-    
-    h2 {
-      font-size: 1.5rem;
-      line-height: 1.5rem;
-      color: #333;
-      padding-top: 1rem;
-      text-decoration: underline;
-  }
-      
-    </style>
-  </head>
-  <body>
-    <header>
-      <h1>URL Shortener</h1>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Twin-Url</h1>
+        </div>
     </header>
-    <div class="container">
-    <h2>Create Short URLs:</h2>
-      <form id="add-redirect-form">
-        <label for="path";"><strong>Path:</strong> (If no path is specified, a random path will be generated</label>
-        <input type="text" id="path" name="path" >
-        <label for="url" style="font-weight: bold;">URL:</label>
-        <input type="url" id="url" name="url" required>
-        <label for="secretCode" style="font-weight: bold;">Secret Code:</label>
-        <input type="text" id="secretCode" name="secretCode" required>
-        <button type="submit" class="primary-button" style="font-weight: bold;">Create Short Url</button>
-      </form>
-      <p id="message"></p>
-      <div>
-        <a style="color: #b36007; font-weight: bold; margin-right: 5px;" href="/list">List All Short Urls</a>
-        <a style="color: #057a28; font-weight: bold;" href="/delete">Delete Short Urls</a>
-      </div>
-      <h2 style="visibility:hidden">Redirects</h2>
-      <table id="redirects-table" style="visibility:hidden">
-        <thead>
-          <tr>
-            <th>Path</th>
-            <th>URL</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div>
-      <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-    </div>
+    
+    <main class="container">
+        <div class="card">
+            <h2 class="card-title">Create Short URL</h2>
+            <form id="add-redirect-form">
+                <div class="form-group">
+                    <label class="label" for="path">Custom Path (optional)</label>
+                    <input type="text" id="path" name="path" class="input" placeholder="Leave empty for random path">
+                </div>
+                
+                <div class="form-group">
+                    <label class="label" for="url">URL*</label>
+                    <input type="url" id="url" name="url" class="input" required placeholder="https://example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label class="label" for="secretCode">Secret Code*</label>
+                    <input type="text" id="secretCode" name="secretCode" class="input" required>
+                </div>
+                
+                <button type="submit" class="button button-primary">Create Short URL</button>
+            </form>
+            
+            <div id="message" class="message" style="display: none;"></div>
+        </div>
+        
+        <div class="nav-links">
+            <a href="/list" class="link">View All URLs</a>
+            <a href="/delete" class="link">Delete URLs</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p style="color: white;">Made with Love by TechWeirdo.net | <a href="https://github.com/drshounak/twin-url" style="color: orange; "class="link">Fork at GitHub</a></p>
+    </footer>
+
     <script>
-      const form = document.getElementById('add-redirect-form');
-      const table = document.getElementById('redirects-table').getElementsByTagName('tbody')[0];
-      const messageEl = document.getElementById('message');
+        const form = document.getElementById('add-redirect-form');
+        const messageEl = document.getElementById('message');
 
-      async function loadRedirects() {
-        table.innerHTML = ''; 
-      }
-
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const path = form.elements.path.value;
-        const url = form.elements.url.value;
-        const secretCode = form.elements.secretCode.value; 
-
-        const response = await fetch('/api/redirects', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ path, url, secretCode }), 
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/api/redirects', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const message = await response.text();
+                messageEl.textContent = message;
+                messageEl.style.display = 'block';
+                
+                if (response.ok) {
+                    form.reset();
+                }
+            } catch (error) {
+                messageEl.textContent = 'An error occurred. Please try again.';
+                messageEl.style.display = 'block';
+            }
         });
-        const message = await response.text();
-        messageEl.textContent = message;
-        form.reset();
-        loadRedirects();
-      });
-
-      loadRedirects();
     </script>
-  </body>
+</body>
 </html>
 `;
 const SECRET_CODE = 'Buddy Replace It With Your own Secret Code';

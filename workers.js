@@ -437,7 +437,7 @@ async function serveListPage(env) {
     </main>
     
     <footer class="footer">
-        <p>Powered by Cloudflare Workers | <a href="https://github.com/drshounak/twin-url" class="link">GitHub</a></p>
+        <p style="color: white;">Made with Love by TechWeirdo.net | <a href="https://github.com/drshounak/twin-url" style="color: orange; "class="link">Fork at GitHub</a></p>
     </footer>
 
     <script>

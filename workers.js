@@ -450,157 +450,74 @@ async function serveListPage(env) {
 
   const listHTML = `
   <!DOCTYPE html>
-   <html>
-    <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serverless Link Redirector</title>
-    <style>
-    body {
-            font-family: Arial, sans-serif;
-            margin: 7px;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
+    <title>Twin-Url - All URLs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Twin-Url</h1>
+        </div>
+    </header>
+    
+    <main class="container">
+        <div class="nav-links">
+            <a href="/" class="link">Create URL</a>
+            <a href="/delete" class="link">Delete URLs</a>
+        </div>
 
-        header {
-            background-color: #045dd1;
-            color: #fff;
-            padding: 10px 0;
-            margin: 10px auto;
-            margin-bottom: 20px;
-            max-width: 650px;
-            border-radius: 7px;
-            text-align: center;
-        }
+        <div class="card">
+            <h2 class="card-title">All Shortened URLs</h2>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Short URL</th>
+                            <th>Destination</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${keys.map(({ name, value }) => `
+                            <tr class="copy-key" data-key="${name}">
+                                <td>${name}</td>
+                                <td>${value}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p style="color: white;">Made with Love by TechWeirdo.net | <a href="https://github.com/drshounak/twin-url" style="color: orange; "class="link">Fork at GitHub</a></p>
+    </footer>
 
-        h1 {
-            margin: 0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            line-height: 1.5rem;
-            color: #333;
-            padding-top: 1rem; 
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            text-align: left;
-            word-break: break-word;
-        }
-
-        th {
-            background-color: #ffca28;
-            color: #333; 
-            min-width: 100px;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #fff;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
-        }
-
-        @media (min-width: 600px) {
-            body {
-                font-size: 1rem;
-            }
-
-            td:nth-child(1),
-            th:nth-child(1) {
-                max-width: 45%;
-
-            }
-        }
-      .back-button {
-            display: block;
-            
-            margin-bottom: 1rem;
-        }
-
-        .back-button a {
-            background-color: #393939;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .back-button a:hover {
-            background-color: #0056b3;
-        }
-    </style>
-    </head>
-    <body>
-    <header>
-      <h1>URL Shortener</h1>
-      </header>
-      <div class="container">
-      <div class="back-button">
-        <a id="back-button" href="/">Back</a>
-        <a id="back-button" href="/delete">Delete</a>
-      </div>
-    <h2>Shortened URLs</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Key</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${keys.map(({ name, value, expiration, metadata }) => `
-          <tr>
-            <td class="copy-key" data-key="${name}">${name}</td>
-            <td>${value}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-    </div>
-    <div>
-      <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-    </div>
     <script>
-  const keyCells = document.querySelectorAll(".copy-key");
-
-  keyCells.forEach(cell => {
-    cell.addEventListener("click", () => {
-      const key = cell.getAttribute("data-key");
-      const url = location.origin + "/" + key; 
-      navigator.clipboard.writeText(url)
-        .then(() => {
-          alert(\`Copied: \${url}\`);
-        })
-        .catch((err) => {
-          console.error("Failed to copy text: ", err);
+        const rows = document.querySelectorAll(".copy-key");
+        
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                const key = row.getAttribute("data-key");
+                const url = `${location.origin}/${key}`;
+                
+                navigator.clipboard.writeText(url)
+                    .then(() => {
+                        alert(`Copied: ${url}`);
+                    })
+                    .catch(err => {
+                        console.error("Failed to copy URL:", err);
+                    });
+            });
         });
-    });
-  });
-</script>
-    </body>
-    </html>
+    </script>
+</body>
+</html>
   `;
 
   return new Response(listHTML, { headers: { 'Content-Type': 'text/html' } });

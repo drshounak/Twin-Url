@@ -154,89 +154,79 @@ export default {
 
     const notFoundHtmlContent = `
       <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 - Page Not Found</title>
-<style>
-body {
-font-family: Arial, sans-serif;
-margin: 7px;
-padding: 0;
-background-color: #f9f9f9;
-}
-header {
-background-color: #045dd1;
-color: #fff;
-padding: 10px 0;
-margin: 10px auto;
-margin-bottom: 20px;
-max-width: 650px;
-border-radius: 7px;
-text-align: center;
-}
-.container {
-max-width: 600px;
-margin: 20px auto;
-padding: 20px;
-background-color: #fff;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-text-align: center;
-}
-h1 {
-margin: 0;
-color: #fff;
-}
-h2 {
-color: #333;
-margin-bottom: 20px;
-font-size: 2em;
-}
-.primary-button {
-background-color: #393939;
-color: #fff;
-padding: 10px 20px;
-text-decoration: none;
-border-radius: 5px;
-margin-top: 20px;
-display: inline-block;
-}
-.primary-button:hover {
-background-color: #03469e;
-}
-img {
-max-width: 150px;
-height: auto;
-margin-bottom: 20px;
-border-radius: 7px;
-}
-p {
-color: #333;
-line-height: 1.4;
-font-size: 1.1rem;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twin-Url - Page Not Found</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: .5rem 1rem;
+        }
+        
+        .error-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        
+        .error-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--foreground);
+            margin-bottom: 2rem;
+        }
+        
+        .error-image {
+            max-width: 150px;
+            height: auto;
+            margin: 0.5rem auto;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .error-text {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            color: var(--muted-foreground);
+        }
+    </style>
 </head>
 <body>
-<header>
-<h1>URL Shortener</h1>
-</header>
-<div class="container">
-<h2>Oh Noooo. 404 Not Found!</h2>
-   <figure>
-      <img src="https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/grumpy-cat-olga-shvartsur.jpg" alt="Grumpy Cat" title="This is Mr. Grumpy">
-     <figcaption><b>👆 This is Mr. Grumpy</b></figcaption>
-
-  <p>Uh-oh, it seems like the page you're trying to reach has gone on a little adventure of its own! <b>It usually happens when the short URL is wrong or not live yet.</b></p>
-<p>But don't worry, if it is a problem at our end then my team of unpaid coding kittens is working hard to track it down. <b>But in most cases I recommend you to poke the person who sent you the link</b></p>
-  <p><em>In the meantime, why not try petting this grumpy feline? It might just cheer them up!</em></p>
-<a href="/" class="primary-button">Pet the Grumpy Cat 😾</a>
-</div>
-<div>
-<p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-</div>
+    
+    <main class="container">
+        <div class="card error-container">
+            <h2 class="error-title">404</h2>
+            <h3 class="error-subtitle">Page Not Found</h3>
+            
+            <img 
+                src="https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/grumpy-cat-olga-shvartsur.jpg" 
+                alt="Grumpy Cat" 
+                class="error-image"
+                title="Mr. Grumpy is not happy about this"
+            >
+            
+            <p class="error-text">
+                Oops! It seems like this URL doesn't exist. This usually happens when:
+                <br><br>
+                • The short URL is incorrect<br>
+                • The link has expired or been deleted<br>
+                • Mr. Grumpy is having a bad day
+            </p>
+            
+            <a href="/" class="button button-primary">Go Back Home</a>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p style="color: white;">Made with Love by TechWeirdo.net | <a href="https://github.com/drshounak/twin-url" style="color: orange; "class="link">Fork at GitHub</a></p>
+    </footer>
 </body>
 </html>
     `;

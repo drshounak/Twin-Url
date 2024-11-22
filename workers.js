@@ -443,16 +443,16 @@ async function serveListPage(env) {
     <script>
         const keyCells = document.querySelectorAll(".copy-key");
         
-        keyCells.forEach(cell => {
-            cell.addEventListener("click", () => {
-                const key = cell.getAttribute("data-key");
-                const url = location.origin + "/" + key; 
+        keyCells.forEach(function(cell) {
+            cell.addEventListener("click", function() {
+                var key = cell.getAttribute("data-key");
+                var url = location.origin + "/" + key; 
                 
                 navigator.clipboard.writeText(url)
-                    .then(() => {
-                        alert(`Copied: ${url}`);
+                    .then(function() {
+                        alert("Copied: " + url);
                     })
-                    .catch((err) => {
+                    .catch(function(err) {
                         console.error("Failed to copy text: ", err);
                     });
             });

@@ -291,128 +291,80 @@ function generateRandomString(length) {
 async function serveDeletePage(env) {
   return new Response(`
      <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>Delete Redirect</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            margin: 7px;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-          
-          header {
-            background-color: #045dd1;
-            color: #fff;
-            padding: 10px 0;
-            margin: 10px auto;
-            margin-bottom: 20px;
-            max-width: 650px;
-            border-radius: 7px;
-            text-align: center;
-        }
-
-        h1 {
-            margin: 0;
-            color: #fff;
-        }
-
-         .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-          h2 {
-            color: #333;
-          }
-
-          form {
-            display: flex;
-            flex-direction: column;
-          }
-
-          label {
-            font-weight: bold;
-            margin-top: 10px;
-          }
-
-          input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-          }
-
-          button {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-          }
-
-          button:hover {
-            background-color: #0056b3;
-          }
-
-          #message {
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-          }
-        </style>
-      </head>
-      <body>
-        <header>
-        <h1>URL Shortener</h1>
-        </header>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twin-Url - Delete URLs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+    <header class="header">
         <div class="container">
-          <h2>Delete Redirect</h2>
-          <form id="delete-redirect-form">
-            <label for="path">Path:</label>
-            <input type="text" id="path" name="path" required>
-            <label for="secretCode">Secret Code:</label>
-            <input type="text" id="secretCode" name="secretCode" required>
-            <button type="submit">Delete Redirect</button>
-          </form>     
-          <p id="message"></p>
-
-          <div class="button">
-           <a id="back-button" style="color: #b36007; font-weight: bold; margin-right: 5px;" href="/">Back</a>
-           <a id="back-button" style="color: #057a28; font-weight: bold;" href="/list">List Page</a>
+            <h1>Twin-Url</h1>
         </div>
+    </header>
+    
+    <main class="container">
+        <div class="nav-links">
+            <a href="/" class="link">Create URL</a>
+            <a href="/list" class="link">View All URLs</a>
         </div>
-        <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-    </div>
-        <script>
-          const form = document.getElementById('delete-redirect-form');
-          const messageEl = document.getElementById('message');
 
-          form.addEventListener('submit', async (event) => {
+        <div class="card">
+            <h2 class="card-title">Delete URL</h2>
+            <form id="delete-redirect-form">
+                <div class="form-group">
+                    <label class="label" for="path">Short URL Path*</label>
+                    <input type="text" id="path" name="path" class="input" required placeholder="Enter the path to delete">
+                </div>
+                
+                <div class="form-group">
+                    <label class="label" for="secretCode">Secret Code*</label>
+                    <input type="text" id="secretCode" name="secretCode" class="input" required>
+                </div>
+                
+                <button type="submit" class="button button-primary">Delete URL</button>
+            </form>
+            
+            <div id="message" class="message" style="display: none;"></div>
+        </div>
+    </main>
+    
+    <footer class="footer">
+        <p style="color: white;">Made with Love by TechWeirdo.net | <a href="https://github.com/drshounak/twin-url" style="color: orange; "class="link">Fork at GitHub</a></p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('delete-redirect-form');
+        const messageEl = document.getElementById('message');
+
+        form.addEventListener('submit', async (event) => {
             event.preventDefault();
-            const path = form.elements.path.value;
-            const secretCode = form.elements.secretCode.value;
-
-            const response = await fetch('/api/redirects', {
-              method: 'DELETE',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams({ path, secretCode }),
-            });
-            const message = await response.text();
-            messageEl.textContent = message;
-            form.reset();
-          });
-        </script>
-      </body>
-    </html>
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch('/api/redirects', {
+                    method: 'DELETE',
+                    body: formData
+                });
+                
+                const message = await response.text();
+                messageEl.textContent = message;
+                messageEl.style.display = 'block';
+                
+                if (response.ok) {
+                    form.reset();
+                }
+            } catch (error) {
+                messageEl.textContent = 'An error occurred. Please try again.';
+                messageEl.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
   `, { headers: { 'Content-Type': 'text/html' } });
 }
 

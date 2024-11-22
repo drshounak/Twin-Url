@@ -392,49 +392,49 @@ async function serveListPage(env) {
 
   const listHTML = `
   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twin-Url - All URLs</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@v1.1/styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-</head>
-<body>
-    <header class="header">
-        <div class="container">
-            <h1>Twin-Url</h1>
-        </div>
-    </header>
-    
-    <main class="container">
-        <div class="nav-links">
-            <a href="/" class="link">Create URL</a>
-            <a href="/delete" class="link">Delete URLs</a>
-        </div>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Twin-Url - All URLs</title>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  </head>
+  <body>
+      <header class="header">
+          <div class="container">
+              <h1>Twin-Url</h1>
+          </div>
+      </header>
+      
+      <main class="container">
+          <div class="nav-links">
+              <a href="/" class="link">Create URL</a>
+              <a href="/delete" class="link">Delete URLs</a>
+          </div>
 
-        <div class="card">
-            <h2 class="card-title">All Shortened URLs</h2>
-            <div class="table-container">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Short URL</th>
-                            <th>Destination</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${keys.map(({ name, value }) => `
-                            <tr class="copy-key" data-key="${name}">
-                                <td>${name}</td>
-                                <td>${value}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
+          <div class="card">
+              <h2 class="card-title">All Shortened URLs</h2>
+              <div class="table-container">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Short URL</th>
+                              <th>Destination</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          ${keys.map(({ name, value }) => `
+                              <tr class="copy-key" data-key="${name}">
+                                  <td>${name}</td>
+                                  <td>${value}</td>
+                              </tr>
+                          `).join('')}
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </main>
     
     <footer class="footer">
         <p style="color: white;">Made with Love by TechWeirdo.net | <a href="https://github.com/drshounak/twin-url" style="color: orange; "class="link">Fork at GitHub</a></p>

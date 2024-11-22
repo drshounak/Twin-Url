@@ -5,7 +5,7 @@ const html = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twin-Url - Modern URL Shortener</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@v1.1/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <link rel="manifest" href="manifest.json"/>
 </head>
@@ -160,7 +160,7 @@ export default {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twin-Url - Page Not Found</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@v1.1/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
     <style>
         .error-container {
@@ -286,7 +286,7 @@ async function serveDeletePage(env) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twin-Url - Delete URLs</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@v1.1/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
@@ -397,7 +397,7 @@ async function serveListPage(env) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Twin-Url - All URLs</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@main/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/drshounak/twin-url@v1.1/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>

@@ -424,13 +424,13 @@ async function serveListPage(env) {
                         </tr>
                     </thead>
                     <tbody>
-                        ${keys.map(({ name, value }) => `
-                            <tr class="copy-key" data-key="${name}">
-                                <td>${name}</td>
-                                <td>${value}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
+        ${keys.map(({ name, value, expiration, metadata }) => `
+          <tr>
+            <td class="copy-key" data-key="${name}">${name}</td>
+            <td>${value}</td>
+          </tr>
+        `).join('')}
+      </tbody>
                 </table>
             </div>
         </div>

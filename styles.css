@@ -140,26 +140,31 @@ body {
   color: var(--primary-dark);
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
+/* Previous CSS remains the same, adding these updates */
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
-.table th,
 .table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
+  max-width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.table th {
+.table .copy-key {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.table .copy-key:hover {
+  background-color: var(--muted);
+}
+
+.table .copy-key td:first-child {
+  color: var(--primary);
   font-weight: 500;
-  color: var(--muted-foreground);
-  background-color: var(--muted);
-}
-
-.table tr:hover {
-  background-color: var(--muted);
 }
 
 .message {

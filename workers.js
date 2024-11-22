@@ -441,22 +441,21 @@ async function serveListPage(env) {
     </footer>
 
     <script>
-        const rows = document.querySelectorAll(".copy-key");
-        
-        rows.forEach(row => {
-            row.addEventListener("click", () => {
-                const key = row.getAttribute("data-key");
-                const url = `${location.origin}/${key}`;
-                
-                navigator.clipboard.writeText(url)
-                    .then(() => {
-                        alert(`Copied: ${url}`);
-                    })
-                    .catch(err => {
-                        console.error("Failed to copy URL:", err);
-                    });
-            });
+        const keyCells = document.querySelectorAll(".copy-key");
+
+  keyCells.forEach(cell => {
+    cell.addEventListener("click", () => {
+      const key = cell.getAttribute("data-key");
+      const url = location.origin + "/" + key; 
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          alert(\`Copied: \${url}\`);
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
         });
+    });
+  });
     </script>
 </body>
 </html>

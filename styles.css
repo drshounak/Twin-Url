@@ -35,7 +35,6 @@ body {
 
 .header {
   background: linear-gradient(to right, var(--primary), var(--accent));
-  padding: 0.5rem 0;
   margin-bottom: 0.5rem;
   position: relative;
   overflow: hidden;

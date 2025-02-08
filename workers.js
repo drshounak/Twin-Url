@@ -397,16 +397,11 @@ async function handleDeleteRedirect(request, env) {
   return new Response('Redirect deleted successfully', { status: 200 });
 }
 
-async function serveListPage(env) {
+async function serveListPage(request, env) {
   const listResult = await env.kv.list();
-  const keys = await Promise.all(listResult.keys.map(async ({ name, expiration, metadata }) => ({
-    name,
-    expiration: new Date(expiration * 1000).toLocaleString(),
-    metadata,
-    value: await env.kv.get(name),
-  })));
+  const keys = listResult.keys;
 
-  const listHTML = `
+  let listHTML = `
 <!DOCTYPE html>
 <html lang="en">
 
@@ -493,7 +488,11 @@ async function serveListPage(env) {
 </body>
 
 </html>
-  `;
+`;
 
-  return new Response(listHTML, { headers: { 'Content-Type': 'text/html' } });
+  return new Response(listHTML, {
+    headers: {
+      'Content-Type': 'text/html'
+    }
+  });
 }

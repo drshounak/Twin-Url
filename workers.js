@@ -200,91 +200,37 @@ export default {
     }
 
     const notFoundHtmlContent = `
-      <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 - Page Not Found</title>
-<style>
-body {
-font-family: Arial, sans-serif;
-margin: 7px;
-padding: 0;
-background-color: #f9f9f9;
-}
-header {
-background-color: #045dd1;
-color: #fff;
-padding: 10px 0;
-margin: 10px auto;
-margin-bottom: 20px;
-max-width: 650px;
-border-radius: 7px;
-text-align: center;
-}
-.container {
-max-width: 600px;
-margin: 20px auto;
-padding: 20px;
-background-color: #fff;
-border-radius: 8px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-text-align: center;
-}
-h1 {
-margin: 0;
-color: #fff;
-}
-h2 {
-color: #333;
-margin-bottom: 20px;
-font-size: 2em;
-}
-.primary-button {
-background-color: #393939;
-color: #fff;
-padding: 10px 20px;
-text-decoration: none;
-border-radius: 5px;
-margin-top: 20px;
-display: inline-block;
-}
-.primary-button:hover {
-background-color: #03469e;
-}
-img {
-max-width: 150px;
-height: auto;
-margin-bottom: 20px;
-border-radius: 7px;
-}
-p {
-color: #333;
-line-height: 1.4;
-font-size: 1.1rem;
-}
-</style>
-</head>
-<body>
-<header>
-<h1>URL Shortener</h1>
-</header>
-<div class="container">
-<h2>Oh Noooo. 404 Not Found!</h2>
-   <figure>
-      <img src="https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/grumpy-cat-olga-shvartsur.jpg" alt="Grumpy Cat" title="This is Mr. Grumpy">
-     <figcaption><b>👆 This is Mr. Grumpy</b></figcaption>
+<!DOCTYPE html>
+<html lang="en">
 
-  <p>Uh-oh, it seems like the page you're trying to reach has gone on a little adventure of its own! <b>It usually happens when the short URL is wrong or not live yet.</b></p>
-<p>But don't worry, if it is a problem at our end then my team of unpaid coding kittens is working hard to track it down. <b>But in most cases I recommend you to poke the person who sent you the link</b></p>
-  <p><em>In the meantime, why not try petting this grumpy feline? It might just cheer them up!</em></p>
-<a href="/" class="primary-button">Pet the Grumpy Cat 😾</a>
-</div>
-<div>
-<p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Not Found</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <style>
+    body {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    img {
+      max-width: 200px;
+      margin-bottom: 1em;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>404 - Not Found</h1>
+  <img src="https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/grumpy-cat-olga-shvartsur.jpg"
+    alt="Grumpy Cat">
+  <p>Oops! The requested URL was not found.</p>
+  <a href="/">Go back home</a>
 </body>
+
 </html>
     `;
 

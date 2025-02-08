@@ -398,10 +398,16 @@ async function handleDeleteRedirect(request, env) {
 }
 
 async function serveListPage(request, env) {
+async function serveListPage(env) {
   const listResult = await env.kv.list();
-  const keys = listResult.keys;
+  const keys = await Promise.all(listResult.keys.map(async ({ name, expiration, metadata }) => ({
+    name,
+    expiration: new Date(expiration * 1000).toLocaleString(),
+    metadata,
+    value: await env.kv.get(name),
+  })));
 
-  let listHTML = `
+  const listHTML = `
 <!DOCTYPE html>
 <html lang="en">
 
@@ -448,42 +454,33 @@ async function serveListPage(request, env) {
         <th>URL</th>
       </tr>
     </thead>
-    <tbody>
-`;
-
-  for (const key of keys) {
-    const value = await env.kv.get(key.name);
-    listHTML += `
-      <tr>
-        <td class="copy-path" data-path="${key.name}">${key.name}</td>
-        <td><a href="${value}">${value}</a></td>
-      </tr>
-    `;
-  }
-
-  listHTML += `
-    </tbody>
-  </table>
+      <tbody>
+        ${keys.map(({ name, value, expiration, metadata }) => `
+          <tr>
+            <td class="copy-key" data-key="${name}">${name}</td>
+            <td>${value}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
   <a href="/">Go back home</a>
 
   <script>
-    const pathCells = document.querySelectorAll('.copy-path');
+    const keyCells = document.querySelectorAll(".copy-key");
 
-    pathCells.forEach(cell => {
-      cell.addEventListener('click', () => {
-        const path = cell.dataset.path;
-        const fullURL = window.location.origin + '/' + path;
-
-        navigator.clipboard.writeText(fullURL)
-          .then(() => {
-            alert('Copied to clipboard: ' + fullURL);
-          })
-          .catch(err => {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy URL.  Please try again.');
-          });
-      });
+  keyCells.forEach(cell => {
+    cell.addEventListener("click", () => {
+      const key = cell.getAttribute("data-key");
+      const url = location.origin + "/" + key; 
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          alert(\`Copied: \${url}\`);
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
     });
+  });
   </script>
 </body>
 

@@ -283,129 +283,94 @@ function generateRandomString(length) {
 
 async function serveDeletePage(env) {
   return new Response(`
-     <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="UTF-8">
-        <title>Delete Redirect</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            margin: 7px;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-          
-          header {
-            background-color: #045dd1;
-            color: #fff;
-            padding: 10px 0;
-            margin: 10px auto;
-            margin-bottom: 20px;
-            max-width: 650px;
-            border-radius: 7px;
-            text-align: center;
-        }
+   <!DOCTYPE html>
+<html lang="en">
 
-        h1 {
-            margin: 0;
-            color: #fff;
-        }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete URL</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <style>
+    body {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+    }
 
-         .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 0.25em;
+    }
 
-          h2 {
-            color: #333;
-          }
+    button {
+      padding: 0.5em 1em;
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 0.25em;
+      cursor: pointer;
+    }
 
-          form {
-            display: flex;
-            flex-direction: column;
-          }
+    button:hover {
+      background-color: #c82333;
+    }
 
-          label {
-            font-weight: bold;
-            margin-top: 10px;
-          }
+    .error {
+      color: red;
+    }
 
-          input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-          }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
 
-          button {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-          }
+<body>
+  <h1>Delete URL</h1>
+  <form id="delete-form">
+    <label for="path">Path to Delete:</label>
+    <input type="text" id="path" name="path" required placeholder="Enter path to delete">
 
-          button:hover {
-            background-color: #0056b3;
-          }
+    <label for="secretCode">Secret Code:</label>
+    <input type="text" id="secretCode" name="secretCode" required>
 
-          #message {
-            margin-top: 20px;
-            text-align: center;
-            font-weight: bold;
-          }
-        </style>
-      </head>
-      <body>
-        <header>
-        <h1>URL Shortener</h1>
-        </header>
-        <div class="container">
-          <h2>Delete Redirect</h2>
-          <form id="delete-redirect-form">
-            <label for="path">Path:</label>
-            <input type="text" id="path" name="path" required>
-            <label for="secretCode">Secret Code:</label>
-            <input type="text" id="secretCode" name="secretCode" required>
-            <button type="submit">Delete Redirect</button>
-          </form>     
-          <p id="message"></p>
+    <button type="submit">Delete URL</button>
+  </form>
+  <p id="message"></p>
+  <a href="/">Go back home</a>
 
-          <div class="button">
-           <a id="back-button" style="color: #b36007; font-weight: bold; margin-right: 5px;" href="/">Back</a>
-           <a id="back-button" style="color: #057a28; font-weight: bold;" href="/list">List Page</a>
-        </div>
-        </div>
-        <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-    </div>
-        <script>
-          const form = document.getElementById('delete-redirect-form');
-          const messageEl = document.getElementById('message');
+  <script>
+    const form = document.getElementById('delete-form');
+    const messageEl = document.getElementById('message');
 
-          form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const path = form.elements.path.value;
-            const secretCode = form.elements.secretCode.value;
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const path = form.elements.path.value;
+      const secretCode = form.elements.secretCode.value;
 
-            const response = await fetch('/api/redirects', {
-              method: 'DELETE',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: new URLSearchParams({ path, secretCode }),
-            });
-            const message = await response.text();
-            messageEl.textContent = message;
-            form.reset();
-          });
-        </script>
-      </body>
-    </html>
+      const response = await fetch('/api/redirects', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          path,
+          secretCode
+        }),
+      });
+
+      const result = await response.text();
+      messageEl.textContent = result;
+      form.reset();
+    });
+  </script>
+</body>
+
+</html>  
   `, { headers: { 'Content-Type': 'text/html' } });
 }
 

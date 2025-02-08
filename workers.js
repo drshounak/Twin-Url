@@ -408,157 +408,67 @@ async function serveListPage(env) {
 
   const listHTML = `
   <!DOCTYPE html>
-   <html>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serverless Link Redirector</title>
-    <style>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List URLs</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <style>
     body {
-            font-family: Arial, sans-serif;
-            margin: 7px;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+    }
 
-        header {
-            background-color: #045dd1;
-            color: #fff;
-            padding: 10px 0;
-            margin: 10px auto;
-            margin-bottom: 20px;
-            max-width: 650px;
-            border-radius: 7px;
-            text-align: center;
-        }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-        h1 {
-            margin: 0;
-        }
+    th,
+    td {
+      padding: 0.5em;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
 
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
 
-        h2 {
-            margin: 0;
-            font-size: 1.5rem;
-            line-height: 1.5rem;
-            color: #333;
-            padding-top: 1rem; 
-        }
+<body>
+  <h1>List of Shortened URLs</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Path</th>
+        <th>URL</th>
+      </tr>
+    </thead>
+    <tbody>
+`;
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
+  for (const key of keys) {
+    const value = await env.kv.get(key.name);
+    listHTML += `
+      <tr>
+        <td>${key.name}</td>
+        <td><a href="${value}">${value}</a></td>
+      </tr>
+    `;
+  }
 
-        th,
-        td {
-            padding: 12px;
-            text-align: left;
-            word-break: break-word;
-        }
+  listHTML += `
+    </tbody>
+  </table>
+  <a href="/">Go back home</a>
+</body>
 
-        th {
-            background-color: #ffca28;
-            color: #333; 
-            min-width: 100px;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #fff;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
-        }
-
-        @media (min-width: 600px) {
-            body {
-                font-size: 1rem;
-            }
-
-            td:nth-child(1),
-            th:nth-child(1) {
-                max-width: 45%;
-
-            }
-        }
-      .back-button {
-            display: block;
-            
-            margin-bottom: 1rem;
-        }
-
-        .back-button a {
-            background-color: #393939;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .back-button a:hover {
-            background-color: #0056b3;
-        }
-    </style>
-    </head>
-    <body>
-    <header>
-      <h1>URL Shortener</h1>
-      </header>
-      <div class="container">
-      <div class="back-button">
-        <a id="back-button" href="/">Back</a>
-        <a id="back-button" href="/delete">Delete</a>
-      </div>
-    <h2>Shortened URLs</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Key</th>
-          <th>Value</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${keys.map(({ name, value, expiration, metadata }) => `
-          <tr>
-            <td class="copy-key" data-key="${name}">${name}</td>
-            <td>${value}</td>
-          </tr>
-        `).join('')}
-      </tbody>
-    </table>
-    </div>
-    <div>
-      <p style="text-align: center;">Running on Cloudflare Workers. <a href="https://2tw.in/GBnNcmic" style="color: #3d02ab; text-decoration: none; font-weight: bold;">Fork The repo at Github</a></p>
-    </div>
-    <script>
-  const keyCells = document.querySelectorAll(".copy-key");
-
-  keyCells.forEach(cell => {
-    cell.addEventListener("click", () => {
-      const key = cell.getAttribute("data-key");
-      const url = location.origin + "/" + key; 
-      navigator.clipboard.writeText(url)
-        .then(() => {
-          alert(\`Copied: \${url}\`);
-        })
-        .catch((err) => {
-          console.error("Failed to copy text: ", err);
-        });
-    });
-  });
-</script>
-    </body>
-    </html>
+</html>
   `;
 
   return new Response(listHTML, { headers: { 'Content-Type': 'text/html' } });

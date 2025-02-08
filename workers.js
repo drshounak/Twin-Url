@@ -407,7 +407,7 @@ async function serveListPage(env) {
   })));
 
   const listHTML = `
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -437,6 +437,10 @@ async function serveListPage(env) {
     th {
       background-color: #f2f2f2;
     }
+
+    .copy-path {
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -456,7 +460,7 @@ async function serveListPage(env) {
     const value = await env.kv.get(key.name);
     listHTML += `
       <tr>
-        <td>${key.name}</td>
+        <td class="copy-path" data-path="${key.name}">${key.name}</td>
         <td><a href="${value}">${value}</a></td>
       </tr>
     `;
@@ -466,6 +470,26 @@ async function serveListPage(env) {
     </tbody>
   </table>
   <a href="/">Go back home</a>
+
+  <script>
+    const pathCells = document.querySelectorAll('.copy-path');
+
+    pathCells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        const path = cell.dataset.path;
+        const fullURL = window.location.origin + '/' + path;
+
+        navigator.clipboard.writeText(fullURL)
+          .then(() => {
+            alert('Copied to clipboard: ' + fullURL);
+          })
+          .catch(err => {
+            console.error('Failed to copy: ', err);
+            alert('Failed to copy URL.  Please try again.');
+          });
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -11,8 +11,8 @@ const manifest = JSON.stringify({
   background_color: '#0d1117',
   theme_color: '#8b5cf6',
   icons: [
-    { src: 'https://assets.2tw.in/icon-192.png', sizes: '192x192', type: 'image/png' },
-    { src: 'https://assets.2tw.in/icon-512.png', sizes: '512x512', type: 'image/png' },
+    { src: 'https://assets.2tw.in/twin-url-logo.webp', sizes: '192x192', type: 'image/png' },
+    { src: 'https://assets.2tw.in/twin-url-logo.webp', sizes: '512x512', type: 'image/png' },
   ],
 });
 

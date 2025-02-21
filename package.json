@@ -1,0 +1,13 @@
+{
+  "name": "twin-url",
+  "version": "1.1.0",
+  "description": "A serverless URL shortener by Twin-Url",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

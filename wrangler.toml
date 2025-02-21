@@ -1,4 +1,4 @@
-name = "twin-url"
+name = "twinurl"
 main = "src/index.js"
 compatibility_date = "2025-02-21"
 

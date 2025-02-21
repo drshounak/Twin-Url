@@ -1,3 +1,5 @@
+# Outdate Guide. New one coming soon. Just create a KV database. create a workers. attach a for of this to workers, set kv id and set secret code ad dashboard env variables. 
+
 # Twin-Url: A simple, fast Url Shortner and redirector with branded domain using Cloudflare Workers (Password Protection and Analytics supported)
 A very simple, fast, free(within cloudflare free limit) URL shortner built on top of Cloudflare Workers and Cloudflare KV database. You can use it as a link organiser and management tool too. For visitors/redirection analytics you can use [**Matomo**](https://matomo.org/) (both paid and self-hosted works). And to password protect you link list page and main ui you can use [Octauthent](https://octauthent.com/)
 

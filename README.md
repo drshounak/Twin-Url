@@ -118,7 +118,7 @@ To track redirects, integrate **Matomo**:
    - Self-host Matomo using [CloudPanel](https://www.cloudpanel.io/docs/v2/php/applications/matomo/) or use a paid instance.
    - Note your Matomo URL (e.g., `https://your.matomo.url/matomo.php`) and `token_auth`.
 
-2. **Modify the Worker**:
+2.2. **Modify the Worker**:
    - Edit `src/index.js` and add the following in the redirect logic (before the `Response`):
      ```javascript
      const dest = await env.KV.get(key);
@@ -139,15 +139,20 @@ To track redirects, integrate **Matomo**:
        payload.append("token_auth", "YOUR_MATOMO_TOKEN_AUTH");
        payload.append("cip", clientIP);
 
-       await fetch(matomoURL, {
+       // Fire-and-forget analytics request (no await)
+       fetch(matomoURL, {
          method: "POST",
          body: payload.toString(),
          headers: {
            "Content-Type": "application/x-www-form-urlencoded",
            "User-Agent": userAgent,
          },
+         keepalive: true,
+       }).catch((error) => {
+         console.error("Analytics tracking failed:", error);
        });
 
+       // Return redirect response immediately
        return new Response("Redirecting...", {
          status: 302,
          headers: { "Location": dest },
@@ -155,11 +160,6 @@ To track redirects, integrate **Matomo**:
      }
      ```
         - Deploy the updated Worker.
-
-3. **Performance Tip**:
-   - Proxy Matomo through a CDN (e.g., Cloudflare with Argo or Bunny) to minimize latency.
-   - please note that if you use this your worker execution will be slow as requests need to travel to matomo, so slows down redirection.
-
 
 
 ## Development

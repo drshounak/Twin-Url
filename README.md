@@ -1,87 +1,180 @@
-# Outdate Guide. New one coming soon. Just create a KV database. create a workers. attach a fork of this github to workers (build, gh auto deploy), set kv id and set secret code ad dashboard env variables. 
+# Twin-Url: A Simple, Fast URL Shortener and Redirector with Branded Domains
 
-# Twin-Url: A simple, fast Url Shortner and redirector with branded domain using Cloudflare Workers (Password Protection and Analytics supported)
-A very simple, fast, free(within cloudflare free limit) URL shortner built on top of Cloudflare Workers and Cloudflare KV database. You can use it as a link organiser and management tool too. For visitors/redirection analytics you can use [**Matomo**](https://matomo.org/) (both paid and self-hosted works). And to password protect you link list page and main ui you can use [Octauthent](https://octauthent.com/)
+**Twin-Url** is a lightweight, serverless URL shortener built on Cloudflare Workers and Cloudflare KV. It offers a sleek UI, password protection, and optional analytics, all while leveraging Cloudflare's free tier (100,000 requests and 1,000 KV operations daily). Use it to shorten URLs, organize links, or manage redirects with ease. Twin-Url now includes advanced features like batch deletion, link modification, and a modernized interface.
 
-## How to use
+- **Live Demo**: [https://2tw.in](https://2tw.in)
+- **GitHub**: [Fork it here](https://2tw.in/GBnNcmic)
 
-### Deploy a KV database
-* Go to Cloudflare workers dashboard and KV, deploy a kv namespace with a fancy name.
+---
 
-### Deploy Workers script
-* Go to your Cloudflare Workers Dashboard and deploy a worker.
-* Go to settings > variables > kv name space binding > add binding
-* Variable Name = "kv" and select the namespace you just created.
-* Then go to Edit code.
-* Copy the workers.js and change your secret code in **line 156 and** deploy.
-* Now add a domain or subdomain of you own in settings > triggers > custom domain.
+## Features
 
-## Reason behind choosing Cloudflare Workers
-* 100,000 free requests daily
-* 1000 free addition, modification or deletions daily.
-* Fast TTFB, globally distributed so, redirect occurs very fast accross the globe
-* Serverless, so no server maintenance headache
+- **Simple URL Shortening**: Convert long URLs into short, branded links (e.g., `https://2tw.in/techblog`).
+- **Random Path Generation**: Auto-generates unique 8-character paths (e.g., `https://2tw.in/AbCd1234`) if no custom path is specified.
+- **Custom Paths**: Set your own path for memorable links.
+- **Link Management UI**: Add, view, modify, and delete links via an intuitive interface.
+- **Batch Deletion**: Select and delete multiple links at once.
+- **Password Protection**: Secure your dashboard with a secret code (configurable in the Worker environment).
+- **Analytics Support**: Optional integration with [**Matomo**](https://matomo.org/) for visitor tracking.
+- **Custom 404 Page**: A fun, branded 404 page for invalid links (e.g., [https://2tw.in/404](https://2tw.in/404)).
+- **Progressive Web App (PWA)**: Installable with a manifest for a native-like experience.
+- **Fast & Global**: Powered by Cloudflare’s edge network for low-latency redirects worldwide.
+- **SEO Control**: Blocks crawling with `/robots.txt`.
+- **Clipboard Integration**: Click short URLs to copy them instantly.
 
-## Features Present
-* A nice UI to add URL.
-* Secret code to prevent unauthorised use **(Change it in line 156).**
-* Go to /list to list all your redirects.
-* Go to /delete and enter the path like 'VDYWckqz' and secret code to delete a redirect
-* Custom 404 page. The default one is funny https://2tw.in/404. 
-* You can set custom path like https://2tw.in/techblog.
-* Or,if you don't specify a path, a random 8 digit string will be generated like https://2tw.in/VDYWckqz. There is a very very negligible chance of genaration of same string in a very very large setup.
-* After a short url is generated it will display the generated url.
-* Click on the short url path to copy the short url on list page
-* /robots.txt: crawling is blocked
+---
 
-## Adding Analytics
-Modify the workers.js script with this matomo code at line 223. The easiest way to self-host matomo is through [CloudPanel](https://www.cloudpanel.io/docs/v2/php/applications/matomo/). This will slow down redirection for locations physically far from your matomo server. If you use analytics try proxying matomo through cdn with good routing (like Cloudflare with Argo or Bunny). Adding this analytics takes away the speed it achieved by being serverless. 
-```
-    const dest = await env.kv.get(key);
-    if (dest) {
-      const matomoURL = `https://your.matomo.url/matomo.php`;
-      const clientIP = request.headers.get('cf-connecting-ip');
-      const userAgent = request.headers.get('User-Agent');
-      const userId = clientIP.replace(/\./g, '').slice(0, 16);
+## Why Cloudflare Workers?
 
-      const payload = new URLSearchParams();
-      payload.append('idsite', '1');
-      payload.append('rec', '1');
-      payload.append('action_name', `Redirect/${key}`);
-      payload.append('url', `https://2tw.in/${key}`);
-      payload.append('_id', userId);
-      payload.append('rand', Math.floor(Math.random() * 1000000000));
-      payload.append('apiv', '1');
-      payload.append('token_auth', 'YOUR_MATOMO_TOKEN_AUTH');
-      payload.append('cip', clientIP);
+- **Free Tier**: 100,000 daily requests and 1,000 KV operations at no cost.
+- **Speed**: Globally distributed edge network ensures fast TTFB (Time to First Byte).
+- **Serverless**: No server maintenance required.
+- **Scalability**: Handles traffic spikes effortlessly.
 
-      await fetch(matomoURL, {
-        method: 'POST',
-        body: payload.toString(),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'User-Agent': userAgent,
-        },
-      });
+---
 
-      return new Response('Redirecting...', {
-        status: 302,
-        headers: {
-          'Location': dest,
-        },
-      });
-    }
-```
+## Prerequisites
 
-## Feature Not Present
-* As modification of redirects is rare, I didn't add UI for that, you can easily change your redirect url by going to you kv dashboard and your kv database.
+- A **Cloudflare account** with access to Workers and KV.
+- Basic familiarity with GitHub and command-line tools.
+- (Optional) A custom domain for branded URLs.
 
-## Screenshots 
-![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145409.png)
-![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145449.png)
-![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145522.png)
-![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145613.png)
-![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot%202024-04-03%20145644.png)
-![](https://raw.githubusercontent.com/drshounak/Really-Simple-Url-Shortner-with-cloudflare-workers/main/images/Screenshot_20240403_195427_Chrome.png)
+---
+
+## Setup Instructions
+
+### 1. Create a KV Database
+
+1. **Log in to Cloudflare**:
+   - Go to the [Cloudflare Dashboard](https://dash.cloudflare.com/).
+
+2. **Navigate to Workers & KV**:
+   - From the left sidebar, select **Workers & Pages** > **KV**.
+
+3. **Create a KV Namespace**:
+   - Click **Create Namespace**.
+   - Name it something memorable (e.g., `twin-url-links`).
+   - Click **Add** to create it.
+   - Note the **Namespace ID** (you’ll need it later).
+
+### 2. Deploy the Worker
+
+1. **Clone or Fork the Repository**:
+   - Fork the GitHub repo: [https://2tw.in/GBnNcmic](https://2tw.in/GBnNcmic).
+   - Clone it locally: `git clone https://github.com/your-username/twin-url.git`.
+
+2. **Install Dependencies**:
+   - Ensure you have Node.js installed.
+   - Install Wrangler: `npm install -g wrangler`.
+   - Log in to Cloudflare via Wrangler: `wrangler login`.
+
+3. **Configure `wrangler.toml`**:
+   - Open `wrangler.toml` in the project root.
+   - Update the KV namespace binding with your Namespace ID:
+     ```toml
+     [[kv_namespaces]]
+     binding = "KV"
+     id = "YOUR_KV_NAMESPACE_ID"
+     ```
+   - Set a secure `SECRET_CODE` under `[vars]`:
+     ```toml
+      [vars]
+      SECRET_CODE = "your-secret-code-here"
+     ```
+4. **Deploy the Worker**:
+   - Run `npm run deploy` (or `wrangler deploy`).
+   - Wrangler will build and deploy your Worker to Cloudflare.
+
+5. **Attach a Custom Domain (Optional)**:
+   - In the Cloudflare Workers dashboard, go to your Worker > **Triggers** > **Custom Domains**.
+   - Add your domain or subdomain (e.g., `links.yourdomain.com`).
+   - Ensure DNS is configured in Cloudflare for the domain.
+
+6. **Enable GitHub Auto-Deploy (Optional)**:
+   - Link your GitHub repo to Cloudflare Workers for automatic deployments on push.
+
+## Usage
+
+1. **Shorten a URL**:
+   - Visit your Worker URL (e.g., `https://twin-url.your-worker.workers.dev/`).
+   - Enter a destination URL, an optional custom path, and your secret code.
+   - Click **Twin It** to generate a short URL.
+
+2. **View All Links**:
+   - Go to `/list` (e.g., `https://2tw.in/list`).
+   - See all redirects, copy short URLs, or modify/delete them.
+
+3. **Modify a Link**:
+   - On the `/list` page, click **Modify** next to a link, update the destination URL, and save with your secret code.
+
+4. **Delete Links**:
+   - Click **Delete** for a single link or select multiple links and use **Batch Delete** on the `/list` page.
+
+## Adding Analytics (Optional)
+
+To track redirects, integrate **Matomo**:
+
+1. **Set Up Matomo**:
+   - Self-host Matomo using [CloudPanel](https://www.cloudpanel.io/docs/v2/php/applications/matomo/) or use a paid instance.
+   - Note your Matomo URL (e.g., `https://your.matomo.url/matomo.php`) and `token_auth`.
+
+2. **Modify the Worker**:
+   - Edit `src/index.js` and add the following in the redirect logic (before the `Response`):
+     ```javascript
+     const dest = await env.KV.get(key);
+     if (dest) {
+       const matomoURL = "https://your.matomo.url/matomo.php";
+       const clientIP = request.headers.get("cf-connecting-ip");
+       const userAgent = request.headers.get("User-Agent");
+       const userId = clientIP.replace(/\./g, "").slice(0, 16);
+
+       const payload = new URLSearchParams();
+       payload.append("idsite", "1");
+       payload.append("rec", "1");
+       payload.append("action_name", `Redirect/${key}`);
+       payload.append("url", `https://2tw.in/${key}`);
+       payload.append("_id", userId);
+       payload.append("rand", Math.floor(Math.random() * 1000000000));
+       payload.append("apiv", "1");
+       payload.append("token_auth", "YOUR_MATOMO_TOKEN_AUTH");
+       payload.append("cip", clientIP);
+
+       await fetch(matomoURL, {
+         method: "POST",
+         body: payload.toString(),
+         headers: {
+           "Content-Type": "application/x-www-form-urlencoded",
+           "User-Agent": userAgent,
+         },
+       });
+
+       return new Response("Redirecting...", {
+         status: 302,
+         headers: { "Location": dest },
+       });
+     }
+     ```
+        - Deploy the updated Worker.
+
+3. **Performance Tip**:
+   - Proxy Matomo through a CDN (e.g., Cloudflare with Argo or Bunny) to minimize latency.
+   - please note that if you use this your worker execution will be slow as requests need to travel to matomo, so slows down redirection.
 
 
+
+## Development
+
+- **Local Testing**:
+  - Run `npm run dev` (or `wrangler dev`) to test locally with live reloading.
+
+- **Contributing**:
+  - Submit PRs or issues to the [GitHub repo](https://2tw.in/GBnNcmic).
+
+## License
+
+MIT License - Free to use, modify, and distribute.
+
+## Powered By
+
+- [Cloudflare Workers](https://workers.cloudflare.com/)
+- [TechWeirdo](https://www.techweirdo.net)

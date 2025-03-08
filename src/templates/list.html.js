@@ -159,6 +159,7 @@ export default (keys) => `
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    text-decoration: none;
   }
   
   .action-button:hover {
@@ -171,6 +172,7 @@ export default (keys) => `
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    table-layout: fixed;
   }
   
   .links-table th {
@@ -184,6 +186,9 @@ export default (keys) => `
   .links-table td {
     padding: 1rem;
     border-bottom: 1px solid var(--primary-light);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-all;
   }
   
   .links-table tr:last-child td {
@@ -196,6 +201,10 @@ export default (keys) => `
   
   .links-table tbody tr:hover {
     background: rgba(211, 44, 75, 0.05);
+  }
+
+  .links-table tr.hidden {
+    display: none;
   }
   
   .path-cell {
@@ -284,6 +293,13 @@ export default (keys) => `
     color: var(--text-muted);
     max-width: 400px;
     margin: 0 auto 1.5rem;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    display: none;
   }
   
   .modal {
@@ -579,7 +595,7 @@ export default (keys) => `
       </thead>
       <tbody>
         ${keys.map(({ name, value }) => `
-          <tr>
+          <tr class="table-row">
             <td class="path-cell copy-key" data-key="${name}" title="Click to copy">
               ${name}
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px; vertical-align: -3px;">
@@ -603,6 +619,9 @@ export default (keys) => `
         `).join('')}
       </tbody>
     </table>
+    <div class="no-results">
+      <p>No links found matching your search.</p>
+    </div>
     ` : `
     <div class="empty-state">
       <div class="empty-state-icon">
@@ -706,6 +725,8 @@ export default (keys) => `
       const deleteForm = document.getElementById('delete-form');
       const notification = document.getElementById('notification');
       const searchInput = document.getElementById('search-input');
+      const tableRows = document.querySelectorAll('.table-row');
+      const noResults = document.querySelector('.no-results');
       
       // Show notification
       function showNotification(message) {
@@ -724,6 +745,33 @@ export default (keys) => `
       function closeModal(modal) {
         document.body.style.overflow = '';
         modal.classList.remove('show');
+      }
+      
+      // Search functionality
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase().trim();
+          let visibleRows = 0;
+          
+          tableRows.forEach(row => {
+            const pathCell = row.querySelector('.path-cell').textContent.toLowerCase().trim();
+            const destinationCell = row.querySelector('.destination-cell').textContent.toLowerCase().trim();
+            
+            if (pathCell.includes(searchTerm) || destinationCell.includes(searchTerm)) {
+              row.classList.remove('hidden');
+              visibleRows++;
+            } else {
+              row.classList.add('hidden');
+            }
+          });
+          
+          // Show/hide "No results" message
+          if (visibleRows === 0 && searchTerm !== '') {
+            noResults.style.display = 'block';
+          } else {
+            noResults.style.display = 'none';
+          }
+        });
       }
       
       // Close modal buttons

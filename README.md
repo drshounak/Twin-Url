@@ -178,3 +178,21 @@ MIT License - Free to use, modify, and distribute.
 
 - [Cloudflare Workers](https://workers.cloudflare.com/)
 - [TechWeirdo](https://www.techweirdo.net)
+
+
+### Quick Deploy
+
+1. **One-Click Setup** (Easiest Method):
+   - Click the button below to deploy Twin-Url directly to your Cloudflare account:
+   
+   [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yourusername/twin-url)
+   
+   - Follow the prompts to:
+     - Authorize Cloudflare (if not already logged in)
+     - Create a new KV namespace (automatically configured)
+     - Set your `SECRET_CODE` for dashboard protection
+     - Deploy the worker
+
+2. **After Deployment**:
+   - Add your custom domain through the Cloudflare dashboard
+   - Start using your new URL shortener!

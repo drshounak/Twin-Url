@@ -1,0 +1,20 @@
+{
+  "name": "Twin-Url",
+  "description": "A lightweight, serverless URL shortener built on Cloudflare Workers",
+  "resources": [
+    {
+      "type": "kv-namespace",
+      "name": "twin-url-links",
+      "binding": "KV"
+    }
+  ],
+  "env_vars": [
+    {
+      "name": "SECRET_CODE",
+      "type": "secret",
+      "description": "Secret code to protect your dashboard"
+    }
+  ],
+  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_date": "2025-02-21"
+}

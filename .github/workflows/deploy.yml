@@ -1,0 +1,82 @@
+name: Deploy to Cloudflare Workers
+
+on:
+  repository_dispatch:
+    types: [deploy-to-cloudflare]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy Twin-Url
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm ci || npm install
+        
+      - name: Setup Cloudflare Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          
+      - name: Create KV Namespace if it doesn't exist
+        id: create-kv
+        run: |
+          # Check if KV namespace exists, create if not
+          NAMESPACE_ID=$(wrangler kv:namespace list | grep -o '"id": "[^"]*"' | head -1 | cut -d'"' -f4 || echo "")
+          
+          if [ -z "$NAMESPACE_ID" ]; then
+            echo "Creating new KV namespace: twin-url-links"
+            NAMESPACE_INFO=$(wrangler kv:namespace create "twin-url-links")
+            NAMESPACE_ID=$(echo $NAMESPACE_INFO | grep -o '"id": "[^"]*"' | head -1 | cut -d'"' -f4)
+            echo "Created KV namespace with ID: $NAMESPACE_ID"
+          else
+            echo "Using existing KV namespace with ID: $NAMESPACE_ID"
+          fi
+          
+          # Update wrangler.toml with the namespace ID
+          sed -i "s/id = \"\"/id = \"$NAMESPACE_ID\"/g" wrangler.toml
+          echo "kv_namespace_id=$NAMESPACE_ID" >> $GITHUB_OUTPUT
+      
+      - name: Deploy to Cloudflare Workers
+        run: |
+          # Set a default SECRET_CODE if not provided
+          if [ -z "${{ secrets.SECRET_CODE }}" ]; then
+            # Generate a random secret code
+            SECRET_CODE=$(openssl rand -hex 8)
+            echo "Generated random SECRET_CODE: $SECRET_CODE"
+            echo "SECRET_CODE=$SECRET_CODE" >> $GITHUB_ENV
+          else
+            echo "Using provided SECRET_CODE from repository secrets"
+            echo "SECRET_CODE=${{ secrets.SECRET_CODE }}" >> $GITHUB_ENV
+          fi
+          
+          # Update wrangler.toml with SECRET_CODE
+          sed -i "s/SECRET_CODE = \"\"/SECRET_CODE = \"$SECRET_CODE\"/g" wrangler.toml
+          
+          # Deploy to Cloudflare Workers
+          npm run deploy
+        env:
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          
+      - name: Output Deployment Information
+        run: |
+          echo "✅ Twin-Url has been deployed to Cloudflare Workers"
+          echo "🔑 Your SECRET_CODE is: $SECRET_CODE"
+          echo "🌐 Your Worker URL is: https://twinurl.${{ github.actor }}.workers.dev"
+          echo "📝 You can set a custom domain in the Cloudflare Dashboard"
